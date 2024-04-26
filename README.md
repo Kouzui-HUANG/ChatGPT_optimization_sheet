@@ -1,52 +1,60 @@
-# README for GPT Prompt Generation System
+# GPT Prompt Generation System
+
+This project is designed to automate the generation of GPT-4 system prompts based on a set of use-cases and test cases. It leverages a Google Sheets backend for data management and uses various custom functions to interact with the OpenAI API, generating and evaluating prompts dynamically.
 
 ## Overview
 
-This script provides a structured framework for generating and evaluating GPT-4 prompts based on given descriptions and test cases. The system uses Google Sheets (or a similar service) to manage and retrieve data, which is then used to dynamically generate prompts and assess their effectiveness through a series of comparative tests. The main functionalities include prompt generation, prompt testing, ranking, and Elo rating updates for each prompt based on comparative evaluations.
+The script consists of multiple functions, each handling a specific part of the prompt generation and evaluation process:
 
-## Features
+- `generate_candidate_prompts`: Generates new system prompts based on a description and the number of prompts needed.
+- `match_list`: Matches generated prompts for comparative evaluation.
+- `ranking`: Evaluates two prompts against each other based on a specific test case.
+- `main_process`: Coordinates the entire process of generating, evaluating, and updating prompt scores.
+- `initialization`: Resets the spreadsheet to initial state for fresh prompt generation.
 
-- **Dynamic Prompt Generation:** Generates new prompts based on a predefined number of times fetched from a spreadsheet, taking into consideration previously had prompts.
-- **Prompt Evaluation:** Compares generated prompts through a pairwise test set to determine the most effective ones.
-- **Elo Rating System:** Updates the Elo rating for each prompt based on their comparative evaluations to rank them in terms of effectiveness.
-- **Logging and Results Management:** Outputs necessary logs for debugging and manages the results directly within a spreadsheet.
+## Dependencies
 
-## System Components
-
-### 1. `generate_candidate_prompts()`
-- Fetches necessary information such as the number of required prompts from the spreadsheet.
-- Generates prompts using GPT-4 based on the provided system description and logs the results.
-- Calculates the number of prompt comparisons needed and updates the spreadsheet with the new prompt data.
-
-### 2. `match_list()`
-- Retrieves all generated prompts and organizes them into pairs for comparison.
-- Each pair of prompts is compared across various test cases.
-
-### 3. `ranking(prompt_A, prompt_B, test_question)`
-- This function receives two prompts and a test question, generates responses from GPT-3.5-turbo, and then evaluates which prompt produces a better response using a detailed comparison and ranking system.
-
-### 4. `main_process()`
-- Manages the full lifecycle of testing and updating scores based on the ranking results.
-- Updates the Elo ratings of prompts based on the outcomes of their pairwise comparisons.
-
-## Usage
-
-To use this script, ensure that:
-- You have a Google Spreadsheet set up with the appropriate structure to store prompt numbers, test cases, and results.
-- The `OPENAI_API_KEY` is set with a valid API key for OpenAI services.
+To run this script, you need to:
+- Have access to Google Apps Script within Google Sheets.
+- Obtain and configure your OpenAI API key properly within the script.
 
 ## Setup
 
-1. **Spreadsheet Configuration:**
-   - Configure your spreadsheet with columns designated for prompt storage, test cases, ratings, and results.
-2. **API Key:**
-   - Insert your OpenAI API key in the script where `OPENAI_API_KEY` is defined.
+1. **Google Sheets Preparation**:
+    - Open your Google Sheet at [this link](https://docs.google.com/spreadsheets/d/1u2hvxTYtuzlLtk1a8h5ovNsFIzgdPPsHbbs33lXlo4Y/edit?usp=sharing).
+    - Copy one for yourself.
+    - Ensure that the cells are formatted and named as expected by the script (e.g., `panel`, `candidate`, etc.).
 
-## Requirements
+2. **Script Configuration**:
+    - Replace `OPENAI_API_KEY` with your actual OpenAI API key.
 
-- Google Apps Script environment or similar that supports JavaScript.
-- Access to OpenAI API with a valid API key.
+3. **Initialization**:
+    - Run the `initialization()` function by botton to set up or reset the spreadsheet for operations.
 
-## Note
+## Usage
 
-This script is designed to work in environments that support JavaScript execution and can manage HTTP requests to interact with the OpenAI API. Ensure that all external service integrations comply with OpenAI's usage policies and the terms of service of the spreadsheet provider.
+To use the system:
+- Execute the `main_process()` to start the automated process of prompt generation, evaluation, and scoring updates.
+- Monitor the process through the Google Sheets interface and the Logger output within Google Apps Script.
+
+## Important Notes
+
+- The script requires permissions to run Google Apps Script and manage your Google Sheets data.
+- Ensure API usage limits are monitored to avoid unexpected costs or rate limiting issues.
+
+## Contributing
+
+Contributions to this project are welcome. Please fork the repository and submit a pull request with your proposed changes.
+
+## License
+
+Copyright (c) 2024 Kouzui-HUANG
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+---
